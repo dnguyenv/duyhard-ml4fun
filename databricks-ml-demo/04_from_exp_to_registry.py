@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ### Managing the model lifecycle with Model Registry
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/step4.png?raw=true">
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step4.png?raw=true">
 # MAGIC 
 # MAGIC One of the primary challenges among data scientists and ML engineers is the absence of a central repository for models, their versions, and the means to manage them throughout their lifecycle.  
 # MAGIC 
@@ -93,7 +93,7 @@ client.update_model_version(
 # MAGIC %md
 # MAGIC #### Request Transition to Staging
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/webhooks2.png?raw=true" width = 800>
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/webhooks2.png?raw=true" width = 800>
 
 # COMMAND ----------
 

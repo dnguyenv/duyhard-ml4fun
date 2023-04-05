@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ## Churn Prediction Feature Engineering
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/step1.png?raw=true">
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step1.png?raw=true">
 
 # COMMAND ----------
 

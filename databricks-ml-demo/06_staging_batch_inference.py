@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ## Churn Prediction Batch Inference
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/step6.png?raw=true">
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step6.png?raw=true">
 
 # COMMAND ----------
 

@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ## Monthly AutoML Retrain
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/databricks-ml-roles/blob/main/step7.png?raw=true">
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step7.png?raw=true">
 
 # COMMAND ----------
 

@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ### Managing the model lifecycle with Model Registry
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/step4.png?raw=true">
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step4.png?raw=true">
 # MAGIC 
 # MAGIC One of the primary challenges among data scientists and ML engineers is the absence of a central repository for models, their versions, and the means to manage them throughout their lifecycle.  
 # MAGIC 
@@ -49,7 +49,7 @@ from mlflow.tracking import MlflowClient
 
 client = MlflowClient()
 
-run_id = 'c237e096769d42d6a4cb42a2ad36763b' # replace with your own run ID, etc
+run_id = '49cbd7d8cfa943f48521484dc1137945' # replace with your own run ID, etc
 model_name = f"{database_name}_churn"
 model_uri = f"runs:/{run_id}/model"
 
@@ -79,13 +79,13 @@ model_version_details = client.get_model_version(name=model_name, version=model_
 
 client.update_registered_model(
   name=model_details.name,
-  description="This model predicts whether a customer will churn using features from the ibm_telco_churn database.  It is used to update the Telco Churn Dashboard in SQL Analytics."
+  description="This is test model version from Duyhard"
 )
 
 client.update_model_version(
   name=model_details.name,
   version=model_details.version,
-  description="This model version was built using sklearn's Logistic Regression."
+  description="This is test version from Duyhard"
 )
 
 # COMMAND ----------
@@ -93,7 +93,7 @@ client.update_model_version(
 # MAGIC %md
 # MAGIC #### Request Transition to Staging
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/webhooks2.png?raw=true" width = 800>
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/webhooks2.png?raw=true" width = 800>
 
 # COMMAND ----------
 
@@ -131,7 +131,7 @@ mlflow_call_endpoint('transition-requests/create', 'POST', json.dumps(staging_re
 # COMMAND ----------
 
 # Leave a comment for the ML engineer who will be reviewing the tests
-comment = "This was the best model from AutoML, I think we can use it as a baseline."
+comment = "Ok, last comment to move to Stage"
 comment_body = {'name': model_name, 'version': model_details.version, 'comment': comment}
 mlflow_call_endpoint('comments/create', 'POST', json.dumps(comment_body))
 

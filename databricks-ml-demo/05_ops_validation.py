@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ## Model Tests
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/step5.png?raw=true">
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step5.png?raw=true">
 
 # COMMAND ----------
 

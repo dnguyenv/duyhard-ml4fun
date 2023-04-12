@@ -13,6 +13,10 @@
 
 # COMMAND ----------
 
+# MAGIC %pip install koalas
+
+# COMMAND ----------
+
 # DBTITLE 1,Read in Bronze Delta table using Spark
 # Read into Spark
 telcoDF = spark.table("sr_ibm_telco_churn.bronze_customers")

@@ -25,12 +25,25 @@
 
 # COMMAND ----------
 
-# MAGIC %fs ls /home/duy.nguyen@disney.com/ibm-telco-churn/
+# MAGIC %fs ls /home/duy.nguyen@disney.com/ibm-telco-churn/bronze
 
 # COMMAND ----------
 
 # copy the data from driver to DBFS
 # dbutils.fs.cp('file:/databricks/driver/Telco-Customer-Churn.csv', driver_to_dbfs_path)
+
+# COMMAND ----------
+
+# MAGIC %fs 
+# MAGIC ls ./00_reset
+
+# COMMAND ----------
+
+
+
+# COMMAND ----------
+
+
 
 # COMMAND ----------
 

@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ## Model Registry Webhooks
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/step3.png?raw=true">
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step3.png?raw=true">
 # MAGIC 
 # MAGIC ### Supported Events
 # MAGIC * Registered model created
@@ -27,7 +27,7 @@
 # MAGIC 
 # MAGIC ___
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/laughing-garbanzo/blob/main/webhooks2.png?raw=true" width = 600>
+# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/webhooks2.png?raw=true" width = 600>
 # MAGIC 
 # MAGIC - [mlflow REST API](https://mlflow.org/docs/latest/rest-api.html#)
 # MAGIC - [Secrets API](https://docs.databricks.com/dev-tools/api/latest/secrets.html#secretsecretserviceputsecret)
@@ -68,13 +68,18 @@ def mlflow_call_endpoint(endpoint, method, body='{}'):
 
 # COMMAND ----------
 
+slack_webhook
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC ##### Trigger Job
 
 # COMMAND ----------
 
-dbutils.widgets.text("model_name", "duyhard_e2eml_churn")
+#dbutils.widgets.text("model_name", "duyhard_e2eml_churn")
 model_name = dbutils.widgets.get("model_name")
+model_name
 
 # COMMAND ----------
 
@@ -86,7 +91,7 @@ trigger_job = json.dumps({
   "description": "Trigger the ops_validation job when a model is moved to staging.",
   "status": "ACTIVE",
   "job_spec": {
-    "job_id": "90916",    # This is our 05_ops_validation notebook
+    "job_id": "651852407649697",    # This is our 05_ops_validation notebook
     "workspace_url": host,
     "access_token": token
   }
@@ -107,6 +112,10 @@ mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger
 
 # COMMAND ----------
 
+slack_webhook
+
+# COMMAND ----------
+
 
 import urllib 
 import json 
@@ -119,6 +128,40 @@ trigger_slack = json.dumps({
   "model_name": model_name,
   "events": ["TRANSITION_REQUEST_CREATED"],
   "description": "Notify the MLOps team that a model has moved from None to Staging.",
+  "status": "ACTIVE",
+  "http_url_spec": {
+    "url": slack_webhook
+  }
+})
+
+mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
+
+# COMMAND ----------
+
+import urllib 
+import json 
+
+trigger_slack = json.dumps({
+  "model_name": model_name,
+  "events": ["COMMENT_CREATED"],
+  "description": "New comment posted for the model version",
+  "status": "ACTIVE",
+  "http_url_spec": {
+    "url": slack_webhook
+  }
+})
+
+mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
+
+# COMMAND ----------
+
+import urllib 
+import json 
+
+trigger_slack = json.dumps({
+  "model_name": model_name,
+  "events": ["MODEL_VERSION_CREATED"],
+  "description": "New version created for the ML model, take a look!",
   "status": "ACTIVE",
   "http_url_spec": {
     "url": slack_webhook
@@ -183,7 +226,7 @@ mlflow_call_endpoint("registry-webhooks/list", method = "GET", body = list_model
 # Remove a webhook
 mlflow_call_endpoint("registry-webhooks/delete",
                      method="DELETE",
-                     body = json.dumps({'id': '2b1e92b3a83640fbaefa3b5360a6da2f'}))
+                     body = json.dumps({'id': '090321da77fa4fc284750e5fa4072eea'}))
 
 # COMMAND ----------
 

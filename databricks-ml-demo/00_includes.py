@@ -36,8 +36,13 @@ telco_preds_tbl_name = 'telco_preds'
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC USE duyhard_e2eml
+# MAGIC USE duyhard_e2eml;
+# MAGIC SELECT count(*) from duyhard_e2eml.churn_features
 
 # COMMAND ----------
 
-slack_webhook = "https://hooks.slack.com/services/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"
+slack_webhook = "https://hooks.slack.com/services/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"
+
+# COMMAND ----------
+
+

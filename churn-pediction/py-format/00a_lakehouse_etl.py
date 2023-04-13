@@ -11,6 +11,11 @@
 
 # COMMAND ----------
 
+# MAGIC %sh 
+# MAGIC ls -la /databricks/driver/
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC ### Load into Delta Lake
 

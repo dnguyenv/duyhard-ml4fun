@@ -37,7 +37,3 @@ telco_preds_tbl_name = 'telco_preds'
 
 # MAGIC %sql
 # MAGIC USE kyber_db_ml
-
-# COMMAND ----------
-
-slack_webhook = ""

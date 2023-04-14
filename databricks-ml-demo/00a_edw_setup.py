@@ -53,11 +53,6 @@ shutil.rmtree('/dbfs'+telco_preds_path, ignore_errors=True)
 
 # COMMAND ----------
 
-# Double check the content 
-dbutils.fs.ls(driver_to_dbfs_path)
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC # Read Data
 
@@ -74,3 +69,7 @@ df = (spark.read
 # COMMAND ----------
 
 display(df)
+
+# COMMAND ----------
+
+

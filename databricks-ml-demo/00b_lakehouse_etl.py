@@ -25,10 +25,6 @@
 
 # COMMAND ----------
 
-# MAGIC %fs ls /home/duy.nguyen@disney.com/ibm-telco-churn/
-
-# COMMAND ----------
-
 # copy the data from driver to DBFS
 user = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
 driver_to_dbfs_path = 'dbfs:/home/{}/ibm-telco-churn/Telco-Customer-Churn.csv'.format(user)
@@ -78,10 +74,6 @@ display(bronze_df)
 
 # COMMAND ----------
 
-dbutils.fs.ls(bronze_tbl_path)
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC #### Create bronze
 
@@ -93,7 +85,3 @@ _ = spark.sql('''
   USING DELTA 
   LOCATION '{}'
   '''.format(database_name,bronze_tbl_name,bronze_tbl_path))
-
-# COMMAND ----------
-
-

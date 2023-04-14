@@ -36,6 +36,10 @@
 
 # COMMAND ----------
 
+slack_webhook = dbutils.secrets.get("kyber_secrets","slack_token")
+
+# COMMAND ----------
+
 # Helper Functions
 import mlflow
 from mlflow.utils.rest_utils import http_request

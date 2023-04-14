@@ -13,7 +13,7 @@
 import mlflow
 
 # Use MLflow to track experiments
-mlflow.set_experiment("/Users/duy.nguyen@disney.com/databricks_automl/churn_churn_features-2021_09_16-22_29")
+mlflow.set_experiment("/Users/duy.nguyen@disney.com/databricks_automl/kyber_db_ml_churn")
 
 target_col = "churn"
 
@@ -37,7 +37,7 @@ os.makedirs(input_temp_dir)
 
 # Download the artifact and read it into a pandas DataFrame
 input_client = MlflowClient()
-input_data_path = input_client.download_artifacts("de7b2c4e2fde4231b8f93e40030b3b68", "data", input_temp_dir)
+input_data_path = input_client.download_artifacts("db19dd046eda4677bb0ffe24e1673e3f", "data", input_temp_dir)
 df_loaded = pd.read_parquet(os.path.join(input_data_path, "training_data"))
 
 # Delete the temp data

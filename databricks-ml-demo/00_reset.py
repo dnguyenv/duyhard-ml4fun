@@ -57,3 +57,7 @@ shutil.rmtree('/dbfs'+telco_preds_path, ignore_errors=True)
 
 # MAGIC %sql
 # MAGIC USE kyber_db_ml
+
+# COMMAND ----------
+
+

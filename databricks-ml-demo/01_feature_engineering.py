@@ -17,21 +17,7 @@
 
 # Read into Spark
 telcoDF = spark.table(f"{database_name}.bronze_customers")
-
-display(telcoDF)
-
-# COMMAND ----------
-
-# import pyspark.pandas as ps
-# tf = telcoDF.to_pandas_on_spark()
-# dummy = ps.get_dummies(tf,
-#                        columns=['gender', 'partner', 'dependents',
-#                                 'phoneService', 'multipleLines', 'internetService',
-#                                 'onlineSecurity', 'onlineBackup', 'deviceProtection',
-#                                 'techSupport', 'streamingTV', 'streamingMovies',
-#                                 'contract', 'paperlessBilling', 'paymentMethod'],
-#                        dtype = 'int64'
-#                       )
+#display(telcoDF)
 
 # COMMAND ----------
 
@@ -86,15 +72,6 @@ def compute_churn_features(data):
 
 #fs = FeatureStoreClient()
 #fs._catalog_client.delete_feature_table(f"duyhard_e2eml.churn_features")
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC --drop table churn_features
-
-# COMMAND ----------
-
-database_name
 
 # COMMAND ----------
 

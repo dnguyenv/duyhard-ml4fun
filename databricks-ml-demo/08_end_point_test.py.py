@@ -16,7 +16,7 @@ def create_tf_serving_json(data):
 
 def score_model(dataset):
     url = 'https://disney-cpdl-sbx.cloud.databricks.com/serving-endpoints/kyber-db-ml-test1/invocations'
-    headers = {'Authorization': f'Bearer {ACCESS_TOKEN}}', 'Content-Type': 'application/json'}
+    headers = {'Authorization': f'Bearer {ACCESS_TOKEN}', 'Content-Type': 'application/json'}
     ds_dict = {'dataframe_split': dataset.to_dict(orient='split')} if isinstance(dataset, pd.DataFrame) else create_tf_serving_json(dataset)
     data_json = json.dumps(ds_dict, allow_nan=True)
     response = requests.request(method='POST', headers=headers, url=url, data=data_json)

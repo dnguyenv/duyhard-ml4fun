@@ -68,10 +68,6 @@ def mlflow_call_endpoint(endpoint, method, body='{}'):
 
 # COMMAND ----------
 
-slack_webhook
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC ##### Trigger Job
 
@@ -79,7 +75,6 @@ slack_webhook
 
 dbutils.widgets.text("model_name", "kyber_db_ml_churn")
 model_name = dbutils.widgets.get("model_name")
-model_name
 
 # COMMAND ----------
 
@@ -113,10 +108,6 @@ mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger
 # MAGIC `https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX`
 # MAGIC 
 # MAGIC You can read more about Slack webhooks [here](https://api.slack.com/messaging/webhooks#create_a_webhook).
-
-# COMMAND ----------
-
-slack_webhook
 
 # COMMAND ----------
 

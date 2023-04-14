@@ -9,11 +9,6 @@
 
 # COMMAND ----------
 
-# MAGIC %sh
-# MAGIC pwd
-
-# COMMAND ----------
-
 # Set config for database name, file paths, and table names
 database_name = 'kyber_db_ml'
 spark.sql(f"DROP DATABASE IF EXISTS {database_name} CASCADE;")
@@ -79,31 +74,3 @@ df = (spark.read
 # COMMAND ----------
 
 display(df)
-<<<<<<< HEAD
-
-# COMMAND ----------
-
-# skip snowflake and write directly to bronze
-df.createOrReplaceTempView(bronze_tbl_name)
-(spark.sql("select * from bronze_customers")
- .write
- .format("delta")
- .save(bronze_tbl_path)
-)
-
-# COMMAND ----------
-
-# MAGIC %sh 
-# MAGIC ls /Workspace/Repos/duy.nguyen@disney.com/duyhard-ml4fun/databricks-ml-demo
-
-# COMMAND ----------
-
-# MAGIC %md 
-# MAGIC # Snowflake configuration
-
-# COMMAND ----------
-
-# write to snowflake
-
-=======
->>>>>>> origin/tmp-branch

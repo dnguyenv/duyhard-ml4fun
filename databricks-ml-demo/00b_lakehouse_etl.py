@@ -25,7 +25,7 @@
 
 # COMMAND ----------
 
-# MAGIC %fs ls /home/duy.nguyen@disney.com/ibm-telco-churn/bronze
+# MAGIC %fs ls /home/duy.nguyen@disney.com/ibm-telco-churn/
 
 # COMMAND ----------
 
@@ -34,19 +34,6 @@ user = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().
 driver_to_dbfs_path = 'dbfs:/home/{}/ibm-telco-churn/Telco-Customer-Churn.csv'.format(user)
 #dbutils.fs.cp('file:/databricks/driver/Telco-Customer-Churn.csv', driver_to_dbfs_path)
 dbutils.fs.cp('file:/Workspace/Repos/duy.nguyen@disney.com/duyhard-ml4fun/databricks-ml-demo/Telco-Customer-Churn.csv', driver_to_dbfs_path)
-
-
-# COMMAND ----------
-
-# MAGIC %fs 
-# MAGIC ls ./00_reset
-
-# COMMAND ----------
-
-
-
-# COMMAND ----------
-
 
 
 # COMMAND ----------

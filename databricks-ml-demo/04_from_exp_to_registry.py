@@ -59,13 +59,13 @@ model_version_details = client.get_model_version(name=model_name, version=model_
 
 client.update_registered_model(
   name=model_details.name,
-  description="This is test model version from Duyhard"
+  description="This model predicts whether a customer will churn using features from the ibm_telco_churn database.  It is used to update the Telco Churn Dashboard in SQL Analytics."
 )
 
 client.update_model_version(
   name=model_details.name,
   version=model_details.version,
-  description="This is test version from Duyhard"
+  description="This model version was built using sklearn's Logistic Regression."
 )
 
 # COMMAND ----------

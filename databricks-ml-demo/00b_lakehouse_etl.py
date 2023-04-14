@@ -30,7 +30,11 @@
 # COMMAND ----------
 
 # copy the data from driver to DBFS
-# dbutils.fs.cp('file:/databricks/driver/Telco-Customer-Churn.csv', driver_to_dbfs_path)
+user = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
+driver_to_dbfs_path = 'dbfs:/home/{}/ibm-telco-churn/Telco-Customer-Churn.csv'.format(user)
+#dbutils.fs.cp('file:/databricks/driver/Telco-Customer-Churn.csv', driver_to_dbfs_path)
+dbutils.fs.cp('file:/Workspace/Repos/duy.nguyen@disney.com/duyhard-ml4fun/databricks-ml-demo/Telco-Customer-Churn.csv', driver_to_dbfs_path)
+
 
 # COMMAND ----------
 

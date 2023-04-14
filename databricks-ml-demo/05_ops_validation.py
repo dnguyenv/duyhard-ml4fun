@@ -1,8 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## Model Tests
-# MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step5.png?raw=true">
 
 # COMMAND ----------
 
@@ -27,8 +25,8 @@ try:
   registry_event = json.loads(dbutils.widgets.get('event_message'))
   model_name = registry_event['model_name']
   version = registry_event['version']
-  if 'to_stage' in registry_event and registry_event['to_stage'] != 'Staging':
-    dbutils.notebook.exit()
+  #if 'to_stage' in registry_event and registry_event['to_stage'] != 'Staging':
+    #dbutils.notebook.exit()
 except Exception:
   model_name = f'{database_namme}_churn'
   version = "1"
@@ -233,22 +231,54 @@ def mlflow_call_endpoint(endpoint, method, body='{}'):
 # COMMAND ----------
 
 # If any checks failed, reject and move to Archived
-if '0' in results or 'fail' in results: 
-  reject_request_body = {'name': model_details.name, 
-                         'version': model_details.version, 
-                         'stage': 'Staging', 
-                         'comment': 'Tests failed - check the tags or the job run to see what happened.'}
-  
-  mlflow_call_endpoint('transition-requests/reject', 'POST', json.dumps(reject_request_body))
-  
-else: 
-  approve_request_body = {'name': model_details.name,
-                          'version': model_details.version,
-                          'stage': 'Staging',
-                          'archive_existing_versions': 'true',
-                          'comment': 'All tests passed!  Moving to staging.'}
-  
-  mlflow_call_endpoint('transition-requests/approve', 'POST', json.dumps(approve_request_body))
+import mlflow, json
+from mlflow.tracking import MlflowClient
+from databricks.feature_store import FeatureStoreClient
+client = MlflowClient()
+fs = FeatureStoreClient()
+# After receiving payload from webhooks, use MLflow client to retrieve model details and lineage
+try:
+  registry_event = json.loads(dbutils.widgets.get('event_message'))
+  model_name = registry_event['model_name']
+  version = registry_event['version']
+  if 'to_stage' in registry_event and registry_event['to_stage'] == 'Staging':
+    if '0' in results or 'fail' in results: 
+      reject_request_body = {'name': model_details.name, 
+                            'version': model_details.version, 
+                            'stage': 'Staging', 
+                            'comment': 'Tests failed - check the tags or the job run to see what happened.'}
+    
+      mlflow_call_endpoint('transition-requests/reject', 'POST', json.dumps(reject_request_body))
+    
+    else: 
+      approve_request_body = {'name': model_details.name,
+                            'version': model_details.version,
+                            'stage': 'Staging',
+                            'archive_existing_versions': 'true',
+                            'comment': 'All tests passed!  Moving to staging.'}
+    
+      mlflow_call_endpoint('transition-requests/approve', 'POST', json.dumps(approve_request_body))
+
+  if 'to_stage' in registry_event and registry_event['to_stage'] == 'Production':
+    if '0' in results or 'fail' in results: 
+      reject_request_body = {'name': model_details.name, 
+                            'version': model_details.version, 
+                            'stage': 'Production', 
+                            'comment': 'Tests failed - check the tags or the job run to see what happened.'}
+    
+      mlflow_call_endpoint('transition-requests/reject', 'POST', json.dumps(reject_request_body))
+    
+    else: 
+      approve_request_body = {'name': model_details.name,
+                            'version': model_details.version,
+                            'stage': 'Production',
+                            'archive_existing_versions': 'true',
+                            'comment': 'All tests passed!  Moving to production.'}
+    
+      mlflow_call_endpoint('transition-requests/approve', 'POST', json.dumps(approve_request_body))
+except Exception:
+  dbutils.notebook.exit()
+
 
 # COMMAND ----------
 

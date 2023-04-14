@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ## Model Registry Webhooks
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step3.png?raw=true">
+# MAGIC 
 # MAGIC 
 # MAGIC ### Supported Events
 # MAGIC * Registered model created
@@ -77,7 +77,7 @@ slack_webhook
 
 # COMMAND ----------
 
-#dbutils.widgets.text("model_name", "duyhard_e2eml_churn")
+dbutils.widgets.text("model_name", "kyber_db_ml_churn")
 model_name = dbutils.widgets.get("model_name")
 model_name
 
@@ -91,13 +91,17 @@ trigger_job = json.dumps({
   "description": "Trigger the ops_validation job when a model is moved to staging.",
   "status": "ACTIVE",
   "job_spec": {
-    "job_id": "651852407649697",    # This is our 05_ops_validation notebook
+    "job_id": "651852407649697",    # This is job id formed from the testing notebook
     "workspace_url": host,
     "access_token": token
   }
 })
 
 mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_job)
+
+# COMMAND ----------
+
+
 
 # COMMAND ----------
 
@@ -141,10 +145,11 @@ mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger
 import urllib 
 import json 
 
+# consider REGISTERED_MODEL_CREATED to run tests and autoamtic deployments to stages 
 trigger_slack = json.dumps({
   "model_name": model_name,
   "events": ["COMMENT_CREATED"],
-  "description": "New comment posted for the model version",
+  "description": "Notify the MLOps team that there are comments/conversations about a model.",
   "status": "ACTIVE",
   "http_url_spec": {
     "url": slack_webhook
@@ -155,32 +160,7 @@ mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger
 
 # COMMAND ----------
 
-import urllib 
-import json 
 
-trigger_slack = json.dumps({
-  "model_name": model_name,
-  "events": ["MODEL_VERSION_CREATED"],
-  "description": "New version created for the ML model, take a look!",
-  "status": "ACTIVE",
-  "http_url_spec": {
-    "url": slack_webhook
-  }
-})
-
-mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC #### Model Version Transitioned Stage
-# MAGIC 
-# MAGIC These fire whenever a model successfully transitions to a particular stage.
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ##### Notifications
 
 # COMMAND ----------
 
@@ -202,8 +182,85 @@ mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger
 
 # COMMAND ----------
 
+
+import urllib 
+import json 
+
+trigger_slack = json.dumps({
+  "model_name": model_name,
+  "events": ["TRANSITION_REQUEST_TO_PRODUCTION_CREATED"],
+  "description": "Notify the MLOps team that a request to move the model to Production has been created",
+  "http_url_spec": {
+    "url": slack_webhook
+  }
+})
+
+mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
+
+# COMMAND ----------
+
+
+import urllib 
+import json 
+
+trigger_slack = json.dumps({
+  "model_name": model_name,
+  "events": ["MODEL_VERSION_TRANSITIONED_TO_PRODUCTION"],
+  "description": "Notify the MLOps team that a version of model has been transitioned to Production",
+  "http_url_spec": {
+    "url": slack_webhook
+  }
+})
+
+mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
+
+
+# COMMAND ----------
+
+
+import urllib 
+import json 
+
+trigger_slack = json.dumps({
+  "model_name": model_name,
+  "events": ["MODEL_VERSION_TRANSITIONED_TO_ARCHIVED"],
+  "description": "Notify the MLOps team that a version of model has been archived",
+  "http_url_spec": {
+    "url": slack_webhook
+  }
+})
+
+mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
+
+
+
+# COMMAND ----------
+
+
+import urllib 
+import json 
+
+trigger_slack = json.dumps({
+  "model_name": model_name,
+  "events": ["MODEL_VERSION_TAG_SET"],
+  "description": "A set tags have been added",
+  "http_url_spec": {
+    "url": slack_webhook
+  }
+})
+
+mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
+
+
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC #### Manage Webhooks
+
+# COMMAND ----------
+
+
 
 # COMMAND ----------
 
@@ -226,7 +283,7 @@ mlflow_call_endpoint("registry-webhooks/list", method = "GET", body = list_model
 # Remove a webhook
 mlflow_call_endpoint("registry-webhooks/delete",
                      method="DELETE",
-                     body = json.dumps({'id': '090321da77fa4fc284750e5fa4072eea'}))
+                     body = json.dumps({'id': '5c6ad7b834e94611b5192c5c9ae12888'}))
 
 # COMMAND ----------
 
@@ -235,11 +292,3 @@ mlflow_call_endpoint("registry-webhooks/delete",
 # MAGIC 
 # MAGIC **Q:** Where can I find out more information on MLflow Model Registry?  
 # MAGIC **A:** Check out <a href="https://mlflow.org/docs/latest/registry.html#concepts" target="_blank"> for the latest API docs available for Model Registry</a>
-
-# COMMAND ----------
-
-# MAGIC %md-sandbox
-# MAGIC &copy; 2021 Databricks, Inc. All rights reserved.<br/>
-# MAGIC Apache, Apache Spark, Spark and the Spark logo are trademarks of the <a href="http://www.apache.org/">Apache Software Foundation</a>.<br/>
-# MAGIC <br/>
-# MAGIC <a href="https://databricks.com/privacy-policy">Privacy Policy</a> | <a href="https://databricks.com/terms-of-use">Terms of Use</a> | <a href="http://help.databricks.com/">Support</a>

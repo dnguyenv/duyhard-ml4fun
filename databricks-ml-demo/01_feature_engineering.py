@@ -1,8 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## Churn Prediction Feature Engineering
-# MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step1.png?raw=true">
 
 # COMMAND ----------
 
@@ -84,10 +82,10 @@ def compute_churn_features(data):
 # COMMAND ----------
 
 # # clean up feature store
-# from databricks.feature_store import FeatureStoreClient
+#from databricks.feature_store import FeatureStoreClient
 
-# fs = FeatureStoreClient()
-# fs._catalog_client.delete_feature_table(f"{database_name}.churn_features")
+#fs = FeatureStoreClient()
+#fs._catalog_client.delete_feature_table(f"duyhard_e2eml.churn_features")
 
 # COMMAND ----------
 
@@ -96,10 +94,14 @@ def compute_churn_features(data):
 
 # COMMAND ----------
 
+database_name
+
+# COMMAND ----------
+
 from databricks.feature_store import FeatureStoreClient
 
 fs = FeatureStoreClient()
-# fs._catalog_client.delete_feature_table(f"{database_name}.churn_features")
+#fs._catalog_client.delete_feature_table(f"{database_name}.churn_features")
 
 churn_features_df = compute_churn_features(telcoDF)
 

@@ -1,8 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC ## Monthly AutoML Retrain
-# MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step7.png?raw=true">
+# MAGIC ## AutoML Retrain
 
 # COMMAND ----------
 
@@ -33,11 +31,15 @@ features = fs.read_table(feature_table)
 
 # COMMAND ----------
 
+dbutils.fs.ls('dbfs:/tmp/duy.nguyen@disney.com/')
+
+# COMMAND ----------
+
 import databricks.automl
 model = databricks.automl.classify(features, 
                                    target_col = "churn",
                                    data_dir= f"dbfs:/tmp/{user}/",
-                                   timeout_minutes=5) 
+                                   timeout_minutes=30) 
 
 # COMMAND ----------
 

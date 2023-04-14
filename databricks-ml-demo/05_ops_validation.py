@@ -9,7 +9,7 @@
 
 # COMMAND ----------
 
-# MAGIC %run ./00_includes
+# MAGIC %run ./commons
 
 # COMMAND ----------
 

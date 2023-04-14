@@ -10,7 +10,7 @@
 # COMMAND ----------
 
 # Set config for database name, file paths, and table names
-database_name = 'duyhard'
+database_name = 'kyber_db_ml'
 spark.sql(f"DROP DATABASE IF EXISTS {database_name} CASCADE;")
 spark.sql(f"CREATE DATABASE {database_name} COMMENT 'This database is used to maintain Inventory';")
 spark.sql(f"USE {database_name}")
@@ -27,7 +27,7 @@ from pyspark.sql.types import StructType,StructField,DoubleType, StringType, Int
 # Move file from driver to DBFS
 user = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
 driver_to_dbfs_path = 'dbfs:/home/{}/ibm-telco-churn/Telco-Customer-Churn.csv'.format(user)
-dbutils.fs.cp('file:/databricks/driver/Telco-Customer-Churn.csv', driver_to_dbfs_path)
+dbutils.fs.cp('file:/Workspace/Repos/duy.nguyen@disney.com/duyhard-ml4fun/databricks-ml-demo/Telco-Customer-Churn.csv', driver_to_dbfs_path)
 
 # Paths for various Delta tables
 bronze_tbl_path = '/home/{}/ibm-telco-churn/bronze/'.format(user)
@@ -53,6 +53,7 @@ shutil.rmtree('/dbfs'+telco_preds_path, ignore_errors=True)
 
 # COMMAND ----------
 
+# Double check the content 
 dbutils.fs.ls(driver_to_dbfs_path)
 
 # COMMAND ----------
@@ -73,23 +74,3 @@ df = (spark.read
 # COMMAND ----------
 
 display(df)
-
-# COMMAND ----------
-
-# skip snowflake and write directly to bronze
-df.createOrReplaceTempView(bronze_tbl_name)
-(spark.sql("select * from bronze_customers")
- .write
- .format("delta")
- .save(bronze_tbl_path)
-)
-
-# COMMAND ----------
-
-# MAGIC %md 
-# MAGIC # Snowflake configuration
-
-# COMMAND ----------
-
-# write to snowflake
-

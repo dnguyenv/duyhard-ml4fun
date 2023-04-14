@@ -7,7 +7,7 @@ from pyspark.sql.functions import col, when
 from pyspark.sql.types import StructType,StructField,DoubleType, StringType, IntegerType, FloatType
 
 # Set config for database name, file paths, and table names
-database_name = 'duyhard_e2eml'
+database_name = 'kyber_db_ml'
 
 # Move file from driver to DBFS
 user = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
@@ -49,11 +49,11 @@ shutil.rmtree('/dbfs'+telco_preds_path, ignore_errors=True)
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC CREATE DATABASE IF NOT EXISTS duyhard_e2eml
+# MAGIC CREATE DATABASE IF NOT EXISTS kyber_db_ml
 # MAGIC     COMMENT "CREATE A DATABASE WITH A LOCATION PATH"
-# MAGIC     LOCATION "/Users/duy.nguyen@disney.com/databases/duyhard_e2eml" --this must be a location on dbfs (i.e. not direct access)
+# MAGIC     LOCATION "/Users/duy.nguyen@disney.com/databases/kyber_db_ml" --this must be a location on dbfs (i.e. not direct access)
 
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC USE duyhard_e2eml
+# MAGIC USE kyber_db_ml

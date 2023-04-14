@@ -1,25 +1,5 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC ### Managing the model lifecycle with Model Registry
-# MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/step4.png?raw=true">
-# MAGIC 
-# MAGIC One of the primary challenges among data scientists and ML engineers is the absence of a central repository for models, their versions, and the means to manage them throughout their lifecycle.  
-# MAGIC 
-# MAGIC [The MLflow Model Registry](https://docs.databricks.com/applications/mlflow/model-registry.html) addresses this challenge and enables members of the data team to:
-# MAGIC <br><br>
-# MAGIC * **Discover** registered models, current stage in model development, experiment runs, and associated code with a registered model
-# MAGIC * **Transition** models to different stages of their lifecycle
-# MAGIC * **Deploy** different versions of a registered model in different stages, offering MLOps engineers ability to deploy and conduct testing of different model versions
-# MAGIC * **Test** models in an automated fashion
-# MAGIC * **Document** models throughout their lifecycle
-# MAGIC * **Secure** access and permission for model registrations, transitions or modifications
-# MAGIC 
-# MAGIC <img src="https://databricks.com/wp-content/uploads/2020/04/databricks-adds-access-control-to-mlflow-model-registry_01.jpg">
-
-# COMMAND ----------
-
-# MAGIC %md
 # MAGIC ### How to Use the Model Registry
 # MAGIC Typically, data scientists who use MLflow will conduct many experiments, each with a number of runs that track and log metrics and parameters. During the course of this development cycle, they will select the best run within an experiment and register its model with the registry.  Think of this as **committing** the model to the registry, much as you would commit code to a version control system.  
 # MAGIC 
@@ -49,7 +29,7 @@ from mlflow.tracking import MlflowClient
 
 client = MlflowClient()
 
-run_id = 'c237e096769d42d6a4cb42a2ad36763b' # replace with your own run ID, etc
+run_id = 'db19dd046eda4677bb0ffe24e1673e3f' # replace with your own run ID, etc
 model_name = f"{database_name}_churn"
 model_uri = f"runs:/{run_id}/model"
 
@@ -130,8 +110,18 @@ mlflow_call_endpoint('transition-requests/create', 'POST', json.dumps(staging_re
 
 # COMMAND ----------
 
+# Transition request to prod
+prod_request = {'name': model_name,
+                   'version': model_details.version,
+                   'stage': 'Production',
+                   'archive_existing_versions': 'true'}
+
+mlflow_call_endpoint('transition-requests/create', 'POST', json.dumps(prod_request))
+
+# COMMAND ----------
+
 # Leave a comment for the ML engineer who will be reviewing the tests
-comment = "This was the best model from AutoML, I think we can use it as a baseline."
+comment = "Ready for Prod, good job!"
 comment_body = {'name': model_name, 'version': model_details.version, 'comment': comment}
 mlflow_call_endpoint('comments/create', 'POST', json.dumps(comment_body))
 

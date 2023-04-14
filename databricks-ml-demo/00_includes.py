@@ -7,13 +7,12 @@ from pyspark.sql.functions import col, when
 from pyspark.sql.types import StructType,StructField,DoubleType, StringType, IntegerType, FloatType
 
 # Set config for database name, file paths, and table names
-database_name = 'duyhard_e2eml'
-# model_name = 'duyhard_e2eml_churn'
+database_name = 'kyber_db_ml'
 
 # Move file from driver to DBFS
 user = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
 driver_to_dbfs_path = 'dbfs:/home/{}/ibm-telco-churn/Telco-Customer-Churn.csv'.format(user)
-# dbutils.fs.cp('file:/databricks/driver/Telco-Customer-Churn.csv', driver_to_dbfs_path)
+dbutils.fs.cp('file:/Workspace/Repos/duy.nguyen@disney.com/duyhard-ml4fun/databricks-ml-demo/Telco-Customer-Churn.csv', driver_to_dbfs_path)
 
 # Paths for various Delta tables
 bronze_tbl_path = '/home/{}/ibm-telco-churn/bronze/'.format(user)
@@ -29,15 +28,16 @@ telco_preds_tbl_name = 'telco_preds'
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC CREATE DATABASE IF NOT EXISTS duyhard_e2eml
+# MAGIC --USE catalog hive_metastore;
+# MAGIC CREATE DATABASE IF NOT EXISTS kyber_db_ml
 # MAGIC     COMMENT "CREATE A DATABASE WITH A LOCATION PATH"
-# MAGIC     LOCATION "/Users/duy.nguyen@disney.com/databases/duyhard_e2eml" --this must be a location on dbfs (i.e. not direct access)
+# MAGIC     LOCATION "/Users/duy.nguyen@disney.com/databases/duyhard_e2eml" 
 
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC USE duyhard_e2eml
+# MAGIC USE kyber_db_ml
 
 # COMMAND ----------
 
-slack_webhook = "https://hooks.slack.com/services/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"
+slack_webhook = ""

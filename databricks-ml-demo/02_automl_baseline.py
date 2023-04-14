@@ -1,9 +1,5 @@
 # Databricks notebook source
 # MAGIC %md
-
-# COMMAND ----------
-
-# MAGIC %md
 # MAGIC # XGBoost training
 # MAGIC This is an auto-generated notebook. To reproduce these results, attach this notebook to the **Shared Autoscaling APJ** cluster and rerun it.
 # MAGIC - Compare trials in the [MLflow experiment](#mlflow/experiments/3118490411230128/s?orderByKey=metrics.%60val_f1_score%60&orderByAsc=false)

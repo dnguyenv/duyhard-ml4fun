@@ -27,14 +27,12 @@
 # MAGIC 
 # MAGIC ___
 # MAGIC 
-# MAGIC <img src="https://github.com/dnguyenv/duyhard-ml4fun/blob/master/databricks-ml-roles/webhooks2.png?raw=true" width = 600>
-# MAGIC 
 # MAGIC - [mlflow REST API](https://mlflow.org/docs/latest/rest-api.html#)
 # MAGIC - [Secrets API](https://docs.databricks.com/dev-tools/api/latest/secrets.html#secretsecretserviceputsecret)
 
 # COMMAND ----------
 
-# MAGIC %run ./00_includes
+# MAGIC %run ./commons
 
 # COMMAND ----------
 

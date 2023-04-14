@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Set up data and configure paths
+# MAGIC # Set things up
 
 # COMMAND ----------
 

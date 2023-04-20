@@ -39,7 +39,8 @@ import databricks.automl
 model = databricks.automl.classify(features, 
                                    target_col = "churn",
                                    data_dir= f"dbfs:/tmp/{user}/",
-                                   timeout_minutes=30) 
+                                   timeout_minutes=120,
+                                   experiment_name="kyber_db_ml_churn") 
 
 # COMMAND ----------
 

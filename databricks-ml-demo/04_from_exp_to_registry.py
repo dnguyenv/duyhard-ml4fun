@@ -24,12 +24,16 @@
 
 # COMMAND ----------
 
+database_name = f"kyber_db_ml"
+
+# COMMAND ----------
+
 import mlflow
 from mlflow.tracking import MlflowClient
 
 client = MlflowClient()
 
-run_id = 'db19dd046eda4677bb0ffe24e1673e3f' # replace with your own run ID, etc
+run_id = '639804e237124c03915da3f0a7d95e59' # replace with your own run ID, etc
 model_name = f"{database_name}_churn"
 model_uri = f"runs:/{run_id}/model"
 
@@ -120,10 +124,51 @@ mlflow_call_endpoint('transition-requests/create', 'POST', json.dumps(prod_reque
 
 # COMMAND ----------
 
-# Leave a comment for the ML engineer who will be reviewing the tests
-comment = "Ready for Prod, good job!"
+# Leave a comment for the ML engineer who dwill be reviewing the tests
+comment = "Good model!"
 comment_body = {'name': model_name, 'version': model_details.version, 'comment': comment}
 mlflow_call_endpoint('comments/create', 'POST', json.dumps(comment_body))
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ## Register this model to a remote Registry (e.g. on QA)
+
+# COMMAND ----------
+
+dbutils.widgets.text('1_registry_secret_scope', '')
+dbutils.widgets.text('2_registry_secret_key_prefix', '')
+scope = str(dbutils.widgets.get('1_registry_secret_scope'))
+key = str(dbutils.widgets.get('2_registry_secret_key_prefix'))
+registry_uri = 'databricks://' + scope + ':' + key if scope and key else None
+
+# COMMAND ----------
+
+import mlflow
+from mlflow.tracking.client import MlflowClient
+
+client = MlflowClient()
+
+#run_id = model.best_trial.mlflow_run_id # This requires kicking off the automl training job
+run_id = '639804e237124c03915da3f0a7d95e59' # replace with your own run ID
+model_name = f"{database_name}_churn"
+model_uri = f"runs:/{run_id}/model"
+
+client.set_tag(run_id, key='db_table', value=f'{database_name}.churn_features')
+client.set_tag(run_id, key='demographic_vars', value='seniorCitizen,gender_Female')
+client.set_tag(run_id, key='duyhard', value='This is a test')
+
+
+# COMMAND ----------
+
+
+mlflow.set_registry_uri(registry_uri)
+model_details = mlflow.register_model(model_uri, model_name)
+
+
+# COMMAND ----------
+
+model_details
 
 # COMMAND ----------
 

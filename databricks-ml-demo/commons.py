@@ -31,7 +31,7 @@ telco_preds_tbl_name = 'telco_preds'
 # MAGIC --USE catalog hive_metastore;
 # MAGIC CREATE DATABASE IF NOT EXISTS kyber_db_ml
 # MAGIC     COMMENT "CREATE A DATABASE WITH A LOCATION PATH"
-# MAGIC     LOCATION "/Users/duy.nguyen@disney.com/databases/duyhard_e2eml" 
+# MAGIC     LOCATION "/Users/duy.nguyen@disney.com/databases/kyber_db_ml" 
 
 # COMMAND ----------
 

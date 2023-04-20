@@ -11,6 +11,7 @@
 
 # Set config for database name, file paths, and table names
 database_name = 'kyber_db_ml'
+#spark.sql(f"USE CATALOG kyber_sbx")
 spark.sql(f"DROP DATABASE IF EXISTS {database_name} CASCADE;")
 spark.sql(f"CREATE DATABASE {database_name} COMMENT 'This database is used to maintain Inventory';")
 spark.sql(f"USE {database_name}")

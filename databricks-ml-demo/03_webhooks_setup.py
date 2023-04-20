@@ -40,7 +40,6 @@ slack_webhook = dbutils.secrets.get("kyber_secrets","slack_token")
 
 # COMMAND ----------
 
-# Helper Functions
 import mlflow
 from mlflow.utils.rest_utils import http_request
 import json
@@ -75,8 +74,10 @@ def mlflow_call_endpoint(endpoint, method, body='{}'):
 
 # COMMAND ----------
 
+#dbutils.widgets.text("model_name", "kyber_db_ml_churn")
 dbutils.widgets.text("model_name", "kyber_db_ml_churn")
 model_name = dbutils.widgets.get("model_name")
+model_name
 
 # COMMAND ----------
 
@@ -95,10 +96,6 @@ trigger_job = json.dumps({
 })
 
 mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_job)
-
-# COMMAND ----------
-
-
 
 # COMMAND ----------
 
@@ -150,10 +147,6 @@ trigger_slack = json.dumps({
 })
 
 mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger_slack)
-
-# COMMAND ----------
-
-
 
 # COMMAND ----------
 
@@ -253,10 +246,6 @@ mlflow_call_endpoint("registry-webhooks/create", method = "POST", body = trigger
 
 # COMMAND ----------
 
-
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC ##### List 
 
@@ -276,7 +265,7 @@ mlflow_call_endpoint("registry-webhooks/list", method = "GET", body = list_model
 # Remove a webhook
 mlflow_call_endpoint("registry-webhooks/delete",
                      method="DELETE",
-                     body = json.dumps({'id': '5c6ad7b834e94611b5192c5c9ae12888'}))
+                     body = json.dumps({'id': 'b9a93f8933db43e88bc7b7023480b712'}))
 
 # COMMAND ----------
 

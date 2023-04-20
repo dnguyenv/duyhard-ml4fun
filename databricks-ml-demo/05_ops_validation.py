@@ -4,12 +4,11 @@
 
 # COMMAND ----------
 
-# MAGIC %md
-# MAGIC ### Fetch Model in Transition
+# MAGIC %run ./commons
 
 # COMMAND ----------
 
-# MAGIC %run ./commons
+slack_webhook = dbutils.secrets.get("kyber_secrets","slack_token")
 
 # COMMAND ----------
 
